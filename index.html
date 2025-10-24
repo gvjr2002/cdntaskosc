@@ -586,8 +586,17 @@
         };
         let currentRating = 0;
 
-        // Navigation function
+        // Navigation function with URL routing
         function navigateTo(viewName) {
+            // Update URL without page reload
+            history.pushState({ view: viewName }, '', `#${viewName}`);
+            
+            // Render the view
+            renderView(viewName);
+        }
+
+        // Render view function
+        function renderView(viewName) {
             // Hide all views
             document.querySelectorAll('.view').forEach(view => {
                 view.classList.remove('active');
@@ -611,6 +620,28 @@
                 document.getElementById('dashboardUserEmail').textContent = userData.email;
             }
         }
+
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', function(event) {
+            if (event.state && event.state.view) {
+                renderView(event.state.view);
+            } else {
+                // Handle initial load or no state
+                const hash = window.location.hash.substring(1) || 'register';
+                renderView(hash);
+            }
+        });
+
+        // Handle initial page load based on URL hash
+        window.addEventListener('DOMContentLoaded', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash && ['register', 'login', 'dashboard', 'feedback'].includes(hash)) {
+                renderView(hash);
+            } else {
+                // Default to register view and update URL
+                history.replaceState({ view: 'register' }, '', '#register');
+            }
+        });
 
         // Registration Form Handler
         document.getElementById('registrationForm').addEventListener('submit', function(e) {
