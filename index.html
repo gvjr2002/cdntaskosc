@@ -6,7 +6,7 @@
 <!-- End VWO SmartCode -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form</title>
+    <title>SPA Application</title>
     <style>
         * {
             margin: 0;
@@ -44,6 +44,24 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .view {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .view.active {
+            display: block;
         }
 
         .header {
@@ -132,7 +150,7 @@
             margin-top: 5px;
         }
 
-        .submit-btn {
+        .submit-btn, .btn-primary {
             width: 100%;
             padding: 15px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -146,16 +164,16 @@
             margin-top: 10px;
         }
 
-        .submit-btn:hover {
+        .submit-btn:hover, .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
 
-        .submit-btn:active {
+        .submit-btn:active, .btn-primary:active {
             transform: translateY(0);
         }
 
-        .spa-button {
+        .btn-secondary {
             width: 100%;
             padding: 12px;
             background: white;
@@ -171,37 +189,12 @@
             letter-spacing: 1px;
         }
 
-        .spa-button:hover {
+        .btn-secondary:hover {
             background: #667eea;
             color: white;
         }
 
-        .info-text {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .login-link {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .login-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .login-link a:hover {
-            text-decoration: underline;
-        }
-
-        .feedback-btn {
-            display: block;
+        .btn-success {
             width: 100%;
             padding: 12px;
             background: #28a745;
@@ -217,10 +210,55 @@
             transition: all 0.3s ease;
         }
 
-        .feedback-btn:hover {
+        .btn-success:hover {
             background: #218838;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-danger {
+            width: 100%;
+            padding: 12px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .info-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
         }
 
         .checkbox-group {
@@ -242,6 +280,89 @@
             cursor: pointer;
         }
 
+        .success-message, .alert {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            border-color: #bee5eb;
+            color: #0c5460;
+        }
+
+        .error {
+            border-color: #dc3545 !important;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .dashboard-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .dashboard-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .user-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .user-info h2 {
+            margin-bottom: 5px;
+        }
+
+        .user-info p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .rating-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .star {
+            font-size: 2rem;
+            cursor: pointer;
+            color: #ddd;
+            transition: all 0.2s ease;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #ffc107;
+            transform: scale(1.2);
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 30px 20px;
@@ -255,117 +376,244 @@
                 grid-template-columns: 1fr;
             }
         }
-
-        .success-message {
-            display: none;
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .error {
-            border-color: #dc3545 !important;
-        }
-
-        .error-message {
-            color: #dc3545;
-            font-size: 0.85rem;
-            margin-top: 5px;
-            display: none;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Hello, Let's Check it!</h1>
-            <p>Let's start now, just try to fill in the details carefully and correctly.</p>
-        </div>
+        <!-- Registration View -->
+        <div id="registerView" class="view active">
+            <div class="header">
+                <h1>Hello, Let's Check it!</h1>
+                <p>Let's start now, just try to fill in the details carefully and correctly.</p>
+            </div>
 
-        <div class="note">
-            <strong>NOTE:-</strong>
-            Please enter a password that is at least 8 characters long.
-        </div>
+            <div class="note">
+                <strong>NOTE:-</strong>
+                Please enter a password that is at least 8 characters long.
+            </div>
 
-        <div id="successMessage" class="success-message">
-            Registration successful! Please check your email for confirmation.
-        </div>
+            <form id="registrationForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name *</label>
+                        <input type="text" id="firstName" name="firstName" required placeholder="John">
+                        <span class="error-message">Please enter your first name</span>
+                    </div>
 
-        <form id="registrationForm">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="firstName">First Name *</label>
-                    <input type="text" id="firstName" name="firstName" required placeholder="John">
-                    <span class="error-message">Please enter your first name</span>
+                    <div class="form-group">
+                        <label for="lastName">Last Name *</label>
+                        <input type="text" id="lastName" name="lastName" required placeholder="Doe">
+                        <span class="error-message">Please enter your last name</span>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="lastName">Last Name *</label>
-                    <input type="text" id="lastName" name="lastName" required placeholder="Doe">
-                    <span class="error-message">Please enter your last name</span>
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required placeholder="john.doe@example.com">
+                    <span class="error-message">Please enter a valid email address</span>
                 </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="+1 (555) 123-4567">
+                    <span class="error-message">Please enter your phone number</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password *</label>
+                    <input type="password" id="password" name="password" required minlength="8" placeholder="Enter password (min. 8 characters)">
+                    <p class="password-hint">Must be at least 8 characters long</p>
+                    <span class="error-message">Password must be at least 8 characters</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password *</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Re-enter password">
+                    <span class="error-message">Passwords do not match</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" placeholder="Enter your address (optional)"></textarea>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">I agree to the Terms and Conditions *</label>
+                </div>
+
+                <button type="submit" class="submit-btn">Register Now</button>
+            </form>
+
+            <button class="btn-secondary" onclick="navigateTo('dashboard')">Go to Dashboard</button>
+
+            <p class="info-text">
+                After registering please check your email for a confirmation message.
+            </p>
+
+            <div class="link">
+                Already a registered user? <a onclick="navigateTo('login')">Click here</a>
             </div>
 
-            <div class="form-group">
-                <label for="email">Email Address *</label>
-                <input type="email" id="email" name="email" required placeholder="john.doe@example.com">
-                <span class="error-message">Please enter a valid email address</span>
-            </div>
-
-            <div class="form-group">
-                <label for="phone">Phone Number *</label>
-                <input type="tel" id="phone" name="phone" required placeholder="+1 (555) 123-4567">
-                <span class="error-message">Please enter your phone number</span>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password *</label>
-                <input type="password" id="password" name="password" required minlength="8" placeholder="Enter password (min. 8 characters)">
-                <p class="password-hint">Must be at least 8 characters long</p>
-                <span class="error-message">Password must be at least 8 characters</span>
-            </div>
-
-            <div class="form-group">
-                <label for="confirmPassword">Confirm Password *</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Re-enter password">
-                <span class="error-message">Passwords do not match</span>
-            </div>
-
-            <div class="form-group">
-                <label for="address">Address</label>
-                <textarea id="address" name="address" placeholder="Enter your address (optional)"></textarea>
-            </div>
-
-            <div class="checkbox-group">
-                <input type="checkbox" id="terms" name="terms" required>
-                <label for="terms">I agree to the Terms and Conditions *</label>
-            </div>
-
-            <button type="submit" class="submit-btn">Register Now</button>
-        </form>
-
-        <button class="spa-button" onclick="alert('SPA Navigation - This would navigate to another section')">SPA BUTTON</button>
-
-        <p class="info-text">
-            After registering please check your email for a confirmation message.
-        </p>
-
-        <div class="login-link">
-            Already a registered user? <a href="#" onclick="alert('Navigate to login page'); return false;">Click here</a>
+            <button class="btn-success" onclick="navigateTo('feedback')">Feedback Form</button>
         </div>
 
-        <button class="feedback-btn" onclick="openFeedbackForm()">FEEDBACK-FORM</button>
+        <!-- Login View -->
+        <div id="loginView" class="view">
+            <div class="header">
+                <h1>Welcome Back!</h1>
+                <p>Please login to your account to continue.</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address *</label>
+                    <input type="email" id="loginEmail" name="loginEmail" required placeholder="john.doe@example.com">
+                    <span class="error-message">Please enter a valid email address</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password *</label>
+                    <input type="password" id="loginPassword" name="loginPassword" required placeholder="Enter your password">
+                    <span class="error-message">Please enter your password</span>
+                </div>
+
+                <button type="submit" class="btn-primary">Login</button>
+            </form>
+
+            <button class="btn-secondary" onclick="navigateTo('dashboard')">Go to Dashboard</button>
+
+            <div class="link">
+                Don't have an account? <a onclick="navigateTo('register')">Register here</a>
+            </div>
+
+            <div class="link">
+                <a onclick="navigateTo('feedback')">Give us feedback</a>
+            </div>
+        </div>
+
+        <!-- Dashboard View -->
+        <div id="dashboardView" class="view">
+            <div class="header">
+                <h1>Dashboard</h1>
+                <p>Welcome to your personal dashboard</p>
+            </div>
+
+            <div class="user-info">
+                <h2 id="dashboardUserName">User Dashboard</h2>
+                <p id="dashboardUserEmail">user@example.com</p>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>📊 Your Statistics</h3>
+                <p>Account Status: <strong>Active</strong></p>
+                <p>Member Since: <strong>October 2025</strong></p>
+                <p>Total Activities: <strong>12</strong></p>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>🎯 Quick Actions</h3>
+                <p>Explore the various sections of our application using the navigation buttons below.</p>
+            </div>
+
+            <button class="btn-primary" onclick="navigateTo('register')">New Registration</button>
+            <button class="btn-secondary" onclick="navigateTo('feedback')">Share Feedback</button>
+            <button class="btn-danger" onclick="logout()">Logout</button>
+        </div>
+
+        <!-- Feedback View -->
+        <div id="feedbackView" class="view">
+            <div class="header">
+                <h1>📝 Feedback Form</h1>
+                <p>We'd love to hear your thoughts and suggestions!</p>
+            </div>
+
+            <form id="feedbackForm">
+                <div class="form-group">
+                    <label for="feedbackName">Your Name *</label>
+                    <input type="text" id="feedbackName" name="feedbackName" required placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label for="feedbackEmail">Email Address *</label>
+                    <input type="email" id="feedbackEmail" name="feedbackEmail" required placeholder="your.email@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="feedbackCategory">Category *</label>
+                    <select id="feedbackCategory" name="feedbackCategory" required>
+                        <option value="">Select a category</option>
+                        <option value="bug">Bug Report</option>
+                        <option value="feature">Feature Request</option>
+                        <option value="improvement">Improvement</option>
+                        <option value="general">General Feedback</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Rate Your Experience *</label>
+                    <div class="rating-group">
+                        <span class="star" data-rating="1" onclick="setRating(1)">★</span>
+                        <span class="star" data-rating="2" onclick="setRating(2)">★</span>
+                        <span class="star" data-rating="3" onclick="setRating(3)">★</span>
+                        <span class="star" data-rating="4" onclick="setRating(4)">★</span>
+                        <span class="star" data-rating="5" onclick="setRating(5)">★</span>
+                    </div>
+                    <input type="hidden" id="rating" name="rating" value="0">
+                </div>
+
+                <div class="form-group">
+                    <label for="feedbackMessage">Your Feedback *</label>
+                    <textarea id="feedbackMessage" name="feedbackMessage" required placeholder="Tell us what you think..." style="min-height: 120px;"></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary">Submit Feedback</button>
+            </form>
+
+            <button class="btn-secondary" onclick="navigateTo('dashboard')">Back to Dashboard</button>
+            <button class="btn-secondary" onclick="navigateTo('register')">Go to Registration</button>
+        </div>
     </div>
 
     <script>
-        const form = document.getElementById('registrationForm');
-        const successMessage = document.getElementById('successMessage');
+        // In-memory user data
+        let userData = {
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: '',
+            address: ''
+        };
+        let currentRating = 0;
 
-        form.addEventListener('submit', function(e) {
+        // Navigation function
+        function navigateTo(viewName) {
+            // Hide all views
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.remove('active');
+            });
+
+            // Show selected view
+            const targetView = document.getElementById(viewName + 'View');
+            if (targetView) {
+                targetView.classList.add('active');
+                // Trigger animation
+                targetView.style.animation = 'none';
+                setTimeout(() => {
+                    targetView.style.animation = 'fadeIn 0.4s ease';
+                }, 10);
+            }
+
+            // Update dashboard with user data if navigating to dashboard
+            if (viewName === 'dashboard' && userData.email) {
+                document.getElementById('dashboardUserName').textContent = 
+                    `${userData.firstName} ${userData.lastName}`;
+                document.getElementById('dashboardUserEmail').textContent = userData.email;
+            }
+        }
+
+        // Registration Form Handler
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             // Reset previous errors
@@ -425,20 +673,92 @@
             }
 
             if (isValid) {
-                // Show success message
-                successMessage.style.display = 'block';
-                form.reset();
-                
-                // Scroll to top to see success message
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Store user data
+                userData = {
+                    firstName: firstName.value,
+                    lastName: lastName.value,
+                    email: email.value,
+                    phone: phone.value,
+                    address: document.getElementById('address').value
+                };
 
-                // Hide success message after 5 seconds
+                alert('Registration successful! Check your email for confirmation.');
+                this.reset();
+                
+                // Navigate to dashboard
                 setTimeout(() => {
-                    successMessage.style.display = 'none';
-                }, 5000);
+                    navigateTo('dashboard');
+                }, 1000);
             }
         });
 
+        // Login Form Handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (email && password) {
+                // Simulate login
+                userData.email = email;
+                alert('Login successful! Welcome back.');
+                this.reset();
+                navigateTo('dashboard');
+            }
+        });
+
+        // Feedback Form Handler
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (currentRating === 0) {
+                alert('Please rate your experience');
+                return;
+            }
+
+            alert('Thank you for your feedback! We appreciate your input.');
+            this.reset();
+            currentRating = 0;
+            document.querySelectorAll('.star').forEach(star => {
+                star.classList.remove('active');
+            });
+            
+            setTimeout(() => {
+                navigateTo('dashboard');
+            }, 1000);
+        });
+
+        // Rating System
+        function setRating(rating) {
+            currentRating = rating;
+            document.getElementById('rating').value = rating;
+            
+            document.querySelectorAll('.star').forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        // Logout Function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                userData = {
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    phone: '',
+                    address: ''
+                };
+                alert('You have been logged out successfully.');
+                navigateTo('login');
+            }
+        }
+
+        // Error Display Function
         function showError(element) {
             element.classList.add('error');
             const errorMsg = element.parentElement.querySelector('.error-message');
@@ -462,12 +782,8 @@
             }
         });
 
-        function openFeedbackForm() {
-            alert('Opening feedback form...\n\nThis would open a feedback form in the actual application.');
-        }
-
         // Remove error on input
-        document.querySelectorAll('input, textarea').forEach(input => {
+        document.querySelectorAll('input, textarea, select').forEach(input => {
             input.addEventListener('input', function() {
                 this.classList.remove('error');
                 const errorMsg = this.parentElement.querySelector('.error-message');
